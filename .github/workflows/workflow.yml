@@ -1,0 +1,14 @@
+name: SSE Boost Test CI/CD
+on: [push]
+
+jobs:
+  style:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Aptitude update
+      run: sudo apt update
+    - name: Install clang-format
+      run: sudo apt-get install -y clang-format
+    - name: Format check
+      run: clang-format -i src/*.cpp src/*.hpp tests/*.cpp --dry-run -Werror
