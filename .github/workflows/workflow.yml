@@ -13,12 +13,16 @@ jobs:
 
   build-test:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+        build: [Release, Debug]
     steps:
     - uses: actions/checkout@v4
     - name: Dependency installation
-      run: sudo apt update && sudo apt install -y cmake libeigen3-dev libyaml-cpp-dev libboost-all-dev build-essential
+      run: sudo apt update && sudo apt install -y cmake clang libeigen3-dev libyaml-cpp-dev libboost-all-dev build-essential
     - name: Build step
-      run: mkdir build && cd build && cmake .. && make
+      run: mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${{ matrix.compiler }} -DCMAKE_CXX_COMPILER=$(if [ "${{ matrix.compiler }}" == "gcc" ]; then echo "g++"; else echo "clang++"; fi) -DCMAKE_BUILD_TYPE=${{ matrix.build }} .. && make
     
   test-suite:
     runs-on: ubuntu-24.04
