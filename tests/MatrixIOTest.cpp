@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(LoadMatrixFromFile)
   try {
     loadedMatrix = matrixIO::openData(filePath, dimension);
     BOOST_TEST(loadedMatrix.isApprox(referenceMatrix));
-    BOOST_AUTO_TEST_SUITE_END()
+  } catch (const std::exception &e) {
     BOOST_FAIL("Exception caught: " << e.what());
   }
 }
