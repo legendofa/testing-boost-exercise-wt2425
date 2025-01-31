@@ -2,13 +2,29 @@ name: SSE Boost Test CI/CD
 on: [push]
 
 jobs:
-  style:
+  style-check:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
-    - name: Aptitude update
-      run: sudo apt update
     - name: Install clang-format
-      run: sudo apt-get install -y clang-format
+      run: sudo apt update && sudo apt install -y clang-format
     - name: Format check
       run: clang-format -i src/*.cpp src/*.hpp tests/*.cpp --dry-run -Werror
+
+  build-test:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Dependency installation
+      run: sudo apt update && sudo apt install -y cmake libeigen3-dev libyaml-cpp-dev libboost-all-dev build-essential
+    - name: Build step
+      run: mkdir build && cd build && cmake .. && make
+    
+  test-suite:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Dependency installation
+      run: sudo apt update && sudo apt install -y cmake libeigen3-dev libyaml-cpp-dev libboost-all-dev build-essential
+    - name: Test execution step
+      run: mkdir build && cd build && cmake .. && make && ctest --output-on-failure 
