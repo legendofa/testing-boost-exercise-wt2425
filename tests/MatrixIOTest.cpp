@@ -20,9 +20,9 @@ struct MatrixIOFixture {
         5.5464, 1.1233, 1.2312, 3.2123;
   }
 
-  std::string filePath;
-  int         dimension;
-  Eigen::MatrixXd    referenceMatrix;
+  std::string     filePath;
+  int             dimension;
+  Eigen::MatrixXd referenceMatrix;
 };
 
 BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, MatrixIOFixture, *boost::unit_test::tolerance(1e-4))
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(LoadMatrixFromFile)
   try {
     loadedMatrix = matrixIO::openData(filePath, dimension);
     BOOST_TEST(loadedMatrix.isApprox(referenceMatrix));
-BOOST_AUTO_TEST_SUITE_END()
+    BOOST_AUTO_TEST_SUITE_END()
     BOOST_FAIL("Exception caught: " << e.what());
   }
 }
