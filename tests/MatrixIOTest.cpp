@@ -18,6 +18,8 @@ struct MatrixIOFixture {
         -2.3239, 1.2923, -1.2390, 7.3413,
         1.2324, 1.2323, 6.2342, 7.2341,
         5.5464, 1.1233, 1.2312, 3.2123;
+    outputFile.close();
+    std::remove(outputFileName.c_str());
   }
 
   std::string     filePath;
@@ -27,7 +29,8 @@ struct MatrixIOFixture {
 
 BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, MatrixIOFixture, *boost::unit_test::tolerance(1e-4))
 
-BOOST_AUTO_TEST_CASE(SaveMatrixToFile)
+// Test saving data on opening a file.
+BOOST_AUTO_TEST_CASE(SaveMatrixNameCheck)
 {
   std::string outputFileName = "testmatrix.csv";
   matrixIO::saveData(outputFileName, referenceMatrix);
@@ -35,6 +38,27 @@ BOOST_AUTO_TEST_CASE(SaveMatrixToFile)
   BOOST_TEST(outputFile.is_open());
 }
 
+// Test if the content of the saved matrix is the same as the reference matrix.
+BOOST_AUTO_TEST_CASE(SaveMatrixContentCheck)
+{
+  std::string outputFileName = "testmatrix.csv";
+  matrixIO::saveData(outputFileName, referenceMatrix);
+
+  std::ifstream outputFile(outputFileName);
+  BOOST_TEST(outputFile.is_open());
+
+  Eigen::MatrixXd loadedMatrix(dimension, dimension);
+  for (int i = 0; i < dimension; ++i) {
+    for (int j = 0; j < dimension; ++j) {
+      if (!(outputFile >> loadedMatrix(i, j))) {
+        BOOST_FAIL("Error reading matrix element from file.");
+      }
+    }
+  }
+  BOOST_TEST(loadedMatrix.isApprox(referenceMatrix));
+}
+
+// Test if the loaded matrix is the same as the reference matrix.
 BOOST_AUTO_TEST_CASE(LoadMatrixFromFile)
 {
   Eigen::MatrixXd loadedMatrix;
