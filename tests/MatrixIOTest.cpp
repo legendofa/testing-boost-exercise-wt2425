@@ -18,7 +18,6 @@ struct MatrixIOFixture {
         -2.3239, 1.2923, -1.2390, 7.3413,
         1.2324, 1.2323, 6.2342, 7.2341,
         5.5464, 1.1233, 1.2312, 3.2123;
-    outputFile.close();
     std::remove(outputFileName.c_str());
   }
 
