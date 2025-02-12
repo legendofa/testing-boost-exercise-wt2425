@@ -31,4 +31,4 @@ jobs:
     - name: Dependency installation
       run: sudo apt update && sudo apt install -y cmake libeigen3-dev libyaml-cpp-dev libboost-all-dev build-essential
     - name: Test execution step
-      run: mkdir build && cd build && cmake .. && make && ctest --output-on-failure 
+      run: mkdir build && cd build && cmake -DCMAKE_C_COMPILER=${{ matrix.compiler }} -DCMAKE_CXX_COMPILER=$(if [ "${{ matrix.compiler }}" == "gcc" ]; then echo "g++"; else echo "clang++"; fi) -DCMAKE_BUILD_TYPE=${{ matrix.build }} .. && make && ctest --output-on-failure
