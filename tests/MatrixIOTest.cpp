@@ -30,7 +30,7 @@ BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, MatrixIOFixture, *boost::unit_test::tole
 // Test saving data on opening a file.
 BOOST_AUTO_TEST_CASE(SaveMatrixNameCheck)
 {
-  std::string outputFileName = "testmatrix.csv";
+  std::string outputFileName = "example_matrix.csv";
   matrixIO::saveData(outputFileName, referenceMatrix);
   std::ifstream outputFile(outputFileName);
   BOOST_TEST(outputFile.is_open());
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(SaveMatrixNameCheck)
 // Test if the content of the saved matrix is the same as the reference matrix.
 BOOST_AUTO_TEST_CASE(SaveMatrixContentCheck)
 {
-  std::string outputFileName = "testmatrix.csv";
+  std::string outputFileName = "example_matrix.csv";
   matrixIO::saveData(outputFileName, referenceMatrix);
 
   std::ifstream outputFile(outputFileName);
