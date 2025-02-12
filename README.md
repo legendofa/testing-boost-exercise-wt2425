@@ -1,3 +1,5 @@
+[![SSE Boost Test CI/CD](https://github.com/legendofa/testing-boost-exercise-wt2425/actions/workflows/workflow.yml/badge.svg?branch=extend-tests)](https://github.com/legendofa/testing-boost-exercise-wt2425/actions/workflows/workflow.yml)
+
 # SIDEMADE - Simple Dense Matrix Decomposition
 
 A simple demo code to read dense matrices from files and solve linear systems with them.
