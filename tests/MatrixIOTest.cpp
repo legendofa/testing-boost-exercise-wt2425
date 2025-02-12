@@ -46,13 +46,13 @@ BOOST_AUTO_TEST_CASE(SaveMatrixContentCheck)
   BOOST_TEST(outputFile.is_open());
 
   Eigen::MatrixXd loadedMatrix(dimension, dimension);
-  std::string line;
+  std::string     line;
   for (int i = 0; i < dimension; ++i) {
     if (!std::getline(outputFile, line)) {
       BOOST_FAIL("Error reading line from file.");
     }
     std::stringstream lineStream(line);
-    std::string cell;
+    std::string       cell;
     for (int j = 0; j < dimension; ++j) {
       if (!std::getline(lineStream, cell, ',')) {
         BOOST_FAIL("Error reading matrix element from file.");
